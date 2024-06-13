@@ -8,13 +8,13 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Filters\FilterInterface;
 
-class Auth implements FilterInterface
+class NoAuth implements FilterInterface
 {
   public function before(RequestInterface $reqiest, $arguments = null)
   {
     $sessionModel = new SessionModel();
-    if (!session()->get('logged_in')) {
-      return  redirect()->to("/users/login");
+    if (session()->get('logged_in')) {
+      return  redirect()->to("/");
     }
   }
   public function after(RequestInterface $request, ResponseInterface $response, $arguments = null)

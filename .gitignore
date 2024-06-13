@@ -117,6 +117,7 @@ nb-configuration.xml
 *.sublime-workspace
 *.sublime-project
 .phpintel
+public/template
 /api/
 
 # Visual Studio Code

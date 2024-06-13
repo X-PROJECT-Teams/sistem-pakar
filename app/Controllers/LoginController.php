@@ -14,12 +14,21 @@ class LoginController extends BaseController
   protected $LoginModel;
   public function __construct()
   {
-    helper('form');
+    helper(['form', 'cookie']);
+
     $this->LoginModel = new LoginModel();
   }
   public function index()
   {
+
     return view("login/index");
+  }
+  public function logout()
+  {
+    $session = session();
+    $session->destroy();
+    delete_cookie(Session::$COOKIE_NAME);
+    return redirect()->to('users/login');
   }
 
   public function postlogin()
@@ -37,13 +46,19 @@ class LoginController extends BaseController
       $userData = new User();
       $userData->id = $getData->id;
       $userData->name = $getData->name;
+      $userData->username = $getData->username;
       $userData->password = $getData->password;
       $userData->email = $getData->email;
 
       if (password_verify((string) $password, $userData->password)) {
-
-
-        return redirect()->to("/");
+        if ($this->sessionSave($userData)) {
+          return redirect()->to("/");
+        } else {
+          $data = [
+            "session_error" => "Gagal membuat session harap login ulang!"
+          ];
+          return view("login/index", $data);
+        }
       } else {
         $data = [
           "password_error" => "Password anda masukkan salah!"
@@ -58,27 +73,23 @@ class LoginController extends BaseController
     }
     //return redirect()->to("/users/register");
   }
-  private function sessionSave(LoginModel $userData)
+  private function sessionSave(User $userData)
   {
     $session_data = session();
     $session = new Session();
-    $sessionModel = new SessionModel();
 
     $session->id = uniqid();
     $session->user_id = $userData->id;
 
-    $data = [
-      "id" => $session->id,
-      "user_id" => $session->user_id
+    $ses_data = [
+      'id'       => $session->id,
+      'username' => $userData->username,
+      'name' => $userData->name,
+      'logged_in' => TRUE
     ];
-    if ($sessionModel->insert($data)) {
-      $session_data->set(Session::$COOKIE_NAME, $session->id);
-    } else {
-      $data = [
-        "session_error" => "Gagal membuat session harap login ulang!"
-      ];
-      return view("login/index", $data);
-    }
+    $session_data->set($ses_data);
+    set_cookie(Session::$COOKIE_NAME, $ses_data['id'], 3600); // 1 
+    return true;
   }
   protected function isValidateInput()
   {
