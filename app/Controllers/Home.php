@@ -2,16 +2,85 @@
 
 namespace App\Controllers;
 
+use App\Libraries\Authentication;
+use App\Models\QuizionerModel;
+use App\Models\SessionModel;
+use App\Models\UserModel;
+use Config\Services;
+
 class Home extends BaseController
 {
     public function __construct()
     {
-        helper("form");
+        helper(["jwt", "form"]);
     }
-    public function index(): string
+    public function index()
     {
+        $session  = session();
+        $userModel = new UserModel();
+        $token = Services::request()->getCookie("access_token");
+        $questionModel = new QuizionerModel();
+        $dataQuestion = $questionModel->findAllWithDetail();
+        if ($token) {
+            $data = getJWTData($token);
+            $data = $userModel->findUserByEmail($data->data->email);
+            unset($data['password']);
+            return view('home/home-page', [
+                'username' => $data['username'],
+                'is_admin' => $data['is_admin'],
+                'questions' => $dataQuestion,
+                'success_insert' => $session->get("success_insert")
+            ]);
+        }
 
-        return view('home/index');
+        return view('home/home-page', ['questions' => $dataQuestion]);
+        //return view('home/index', ['questions' => $dataQuestion]);
+    }
+    public function informasi()
+    {
+        $session  = session();
+        $userModel = new UserModel();
+        $token = Services::request()->getCookie("access_token");
+        $questionModel = new QuizionerModel();
+        $dataQuestion = $questionModel->findAllWithDetail();
+        if ($token) {
+            $data = getJWTData($token);
+            $data = $userModel->findUserByEmail($data->data->email);
+            unset($data['password']);
+            return view('home/quiz', [
+                'username' => $data['username'],
+                'is_admin' => $data['is_admin'],
+                'questions' => $dataQuestion,
+                'success_insert' => $session->get("success_insert")
+            ]);
+        }
+
+        return view('home/informasi', ['questions' => $dataQuestion]);
+    }
+    public function quiz()
+    {
+        $session  = session();
+        $userModel = new UserModel();
+        $token = Services::request()->getCookie("access_token");
+        $questionModel = new QuizionerModel();
+        $dataQuestion = $questionModel->findAllWithDetail();
+        if ($token) {
+            $data = getJWTData($token);
+            $data = $userModel->findUserByEmail($data->data->email);
+            unset($data['password']);
+            return view('home/quiz', [
+                'username' => $data['username'],
+                'is_admin' => $data['is_admin'],
+                'questions' => $dataQuestion,
+                'success_insert' => $session->get("success_insert")
+            ]);
+        }
+
+        return view('home/quiz', ['questions' => $dataQuestion]);
+    }
+    public function errorPage()
+    {
+        return view("errors/html/error_404.php");
     }
     public function getHasil()
     {

@@ -49,20 +49,49 @@ CI_ENVIRONMENT = production
 # DATABASE
 
 # --------------------------------------------------------------------
+database.default.hostname = dehidrasi.wtwbuilding.my.id
 
-# database.default.hostname = localhost
 
-# database.default.database = ci4
+  d+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  atabase.default.database = wtwt176_sipakar
 
-# database.default.username = root
+database.default.username = wtwt1796
 
-# database.default.password = root
+database.default.password = Rihan@14
 
-# database.default.DBDriver = MySQLi
+database.default.DBDriver = MySQLi
 
-# database.default.DBPrefix =
+ database.default.DBPrefix =
 
-# database.default.port = 3306
+database.default.port = 3306
 
 # If you use MySQLi as tests, first update the values of Config\Database::$tests
 

@@ -2,7 +2,9 @@
 
 namespace Config;
 
+use App\Filters\AdminAuth;
 use App\Filters\Auth;
+use App\Filters\JWTAuth;
 use App\Filters\NoAuth;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
@@ -36,8 +38,8 @@ class Filters extends BaseFilters
         'forcehttps'    => ForceHTTPS::class,
         'pagecache'     => PageCache::class,
         'performance'   => PerformanceMetrics::class,
-        'auth'  => Auth::class,
-        'noauth' => NoAuth::class
+        'auth'  => JWTAuth::class,
+        'admin' => AdminAuth::class
     ];
 
     /**

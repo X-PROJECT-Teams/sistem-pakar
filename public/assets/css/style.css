@@ -1,0 +1,24 @@
+.is-invalid {
+    border-color: #dc3545; /* Warna merah untuk border */
+}
+.invalid-feedback {
+    display: none; /* Sembunyikan pesan kesalahan secara default */
+}
+.is-invalid + .invalid-feedback {
+    display: block; /* Tampilkan pesan kesalahan saat input tidak valid */
+}
+.position-relative .is-invalid-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #dc3545;
+}
+
+.position-relative .show-password-icon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}

@@ -1,0 +1,139 @@
+ERROR - 2024-06-13 02:20:46 --> Error connecting to the database: mysqli_sql_exception: No connection could be made because the target machine actively refused it in D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'sistem_pakar_te...', 3306, '', 0)
+#1 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1637): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\Project\Freelance\sistem-pakar\app\Models\LoginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\Project\Freelance\sistem-pakar\app\Controllers\LoginController.php(44): App\Models\LoginModel->findUserByUsername('rayyreall')
+#6 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\LoginController->postlogin()
+#7 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+#8 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\Project\Freelance\sistem-pakar\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(49): require_once('D:\\Project\\Free...')
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: No connection could be made because the target machine actively refused it in D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1637): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\Project\Freelance\sistem-pakar\app\Models\LoginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\Project\Freelance\sistem-pakar\app\Controllers\LoginController.php(44): App\Models\LoginModel->findUserByUsername('rayyreall')
+#5 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\LoginController->postlogin()
+#6 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+#7 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 D:\Project\Freelance\sistem-pakar\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(49): require_once('D:\\Project\\Free...')
+#12 {main}
+CRITICAL - 2024-06-13 02:20:46 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: No connection could be made because the target machine actively refused it
+[Method: POST, Route: users/login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1637): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `users`
+WHERE `username` = :username:', [...], false)
+ 3 APPPATH\Models\LoginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH\Controllers\LoginController.php(44): App\Models\LoginModel->findUserByUsername('rayyreall')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LoginController->postlogin()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\Commands\Server\rewrite.php(49): require_once('D:\\Project\\Freelance\\sistem-pakar\\public\\index.php')
+ERROR - 2024-06-13 02:50:09 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'root'@'localhost' (using password: NO) in D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:186
+Stack trace:
+#0 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php(186): mysqli->real_connect('localhost', 'root', Object(SensitiveParameterValue), 'sistem_pakar_te...', 3306, '', 0)
+#1 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#3 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1637): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#4 D:\Project\Freelance\sistem-pakar\app\Models\LoginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+#5 D:\Project\Freelance\sistem-pakar\app\Controllers\LoginController.php(44): App\Models\LoginModel->findUserByUsername('rayyreall')
+#6 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\LoginController->postlogin()
+#7 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+#8 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#9 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#10 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#11 D:\Project\Freelance\sistem-pakar\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#12 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(49): require_once('D:\\Project\\Free...')
+#13 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: NO) in D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+#2 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Database\BaseBuilder.php(1637): CodeIgniter\Database\BaseConnection->query('SELECT *\nFROM `...', Array, false)
+#3 D:\Project\Freelance\sistem-pakar\app\Models\LoginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+#4 D:\Project\Freelance\sistem-pakar\app\Controllers\LoginController.php(44): App\Models\LoginModel->findUserByUsername('rayyreall')
+#5 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(933): App\Controllers\LoginController->postlogin()
+#6 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+#7 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 D:\Project\Freelance\sistem-pakar\public\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 D:\Project\Freelance\sistem-pakar\vendor\codeigniter4\framework\system\Commands\Server\rewrite.php(49): require_once('D:\\Project\\Free...')
+#12 {main}
+CRITICAL - 2024-06-13 02:50:09 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'localhost' (using password: NO)
+[Method: POST, Route: users/login]
+in SYSTEMPATH\Database\BaseConnection.php on line 467.
+ 1 SYSTEMPATH\Database\BaseConnection.php(614): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH\Database\BaseBuilder.php(1637): CodeIgniter\Database\BaseConnection->query('SELECT *
+FROM `users`
+WHERE `username` = :username:', [...], false)
+ 3 APPPATH\Models\LoginModel.php(22): CodeIgniter\Database\BaseBuilder->get()
+ 4 APPPATH\Controllers\LoginController.php(44): App\Models\LoginModel->findUserByUsername('rayyreall')
+ 5 SYSTEMPATH\CodeIgniter.php(933): App\Controllers\LoginController->postlogin()
+ 6 SYSTEMPATH\CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\LoginController))
+ 7 SYSTEMPATH\CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(67): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(56): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 SYSTEMPATH\Commands\Server\rewrite.php(49): require_once('D:\\Project\\Freelance\\sistem-pakar\\public\\index.php')
+ERROR - 2024-06-13 05:56:46 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'wtwt1796'@'sibayak.iixcp.rumahweb.net' to database 'wtwt176_sipakar' in /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php:187
+Stack trace:
+#0 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php(187): mysqli->real_connect()
+#1 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect()
+#2 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/BaseConnection.php(841): CodeIgniter\Database\BaseConnection->initialize()
+#3 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/BaseConnection.php(775): CodeIgniter\Database\BaseConnection->transBegin()
+#4 /home/wtwt1796/sistem_pakar/app/Controllers/Register.php(30): CodeIgniter\Database\BaseConnection->transStart()
+#5 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/CodeIgniter.php(933): App\Controllers\Register->store()
+#6 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#7 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#8 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#9 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#10 /home/wtwt1796/public_html/dehidrasi.wtwbuilding.my.id/index.php(56): CodeIgniter\Boot::bootWeb()
+#11 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'sibayak.iixcp.rumahweb.net' to database 'wtwt176_sipakar' in /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/MySQLi/Connection.php:231
+Stack trace:
+#0 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/BaseConnection.php(421): CodeIgniter\Database\MySQLi\Connection->connect()
+#1 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/BaseConnection.php(841): CodeIgniter\Database\BaseConnection->initialize()
+#2 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Database/BaseConnection.php(775): CodeIgniter\Database\BaseConnection->transBegin()
+#3 /home/wtwt1796/sistem_pakar/app/Controllers/Register.php(30): CodeIgniter\Database\BaseConnection->transStart()
+#4 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/CodeIgniter.php(933): App\Controllers\Register->store()
+#5 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+#6 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+#7 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Boot.php(325): CodeIgniter\CodeIgniter->run()
+#8 /home/wtwt1796/sistem_pakar/vendor/codeigniter4/framework/system/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+#9 /home/wtwt1796/public_html/dehidrasi.wtwbuilding.my.id/index.php(56): CodeIgniter\Boot::bootWeb()
+#10 {main}
+CRITICAL - 2024-06-13 05:56:46 --> CodeIgniter\Database\Exceptions\DatabaseException: Unable to connect to the database.
+Main connection [MySQLi]: Access denied for user '****'@'sibayak.iixcp.rumahweb.net' to database 'wtwt176_sipakar'
+[Method: POST, Route: users/register]
+in SYSTEMPATH/Database/BaseConnection.php on line 467.
+ 1 SYSTEMPATH/Database/BaseConnection.php(841): CodeIgniter\Database\BaseConnection->initialize()
+ 2 SYSTEMPATH/Database/BaseConnection.php(775): CodeIgniter\Database\BaseConnection->transBegin()
+ 3 APPPATH/Controllers/Register.php(30): CodeIgniter\Database\BaseConnection->transStart()
+ 4 SYSTEMPATH/CodeIgniter.php(933): App\Controllers\Register->store()
+ 5 SYSTEMPATH/CodeIgniter.php(509): CodeIgniter\CodeIgniter->runController()
+ 6 SYSTEMPATH/CodeIgniter.php(355): CodeIgniter\CodeIgniter->handleRequest()
+ 7 SYSTEMPATH/Boot.php(325): CodeIgniter\CodeIgniter->run()
+ 8 SYSTEMPATH/Boot.php(67): CodeIgniter\Boot::runCodeIgniter()
+ 9 FCPATH/index.php(56): CodeIgniter\Boot::bootWeb()

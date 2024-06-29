@@ -1,373 +1,202 @@
+<?php
+$groupData = [];
+if (isset($questions)) {
+  foreach ($questions as $quest) {
+    $id = $quest['id'];
+    if (!isset($groupData[$id])) {
+      $groupData[$id] = [
+        'id' => $id,
+        'name' => $quest['name'],
+        'nama' =>  $quest['nama'],
+        'options' => []
+      ];
+    }
+    $groupData[$id]['options'][$quest['index_score']] = $quest['description'];
+  }
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <title>Website Pakar</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
+  <?php
+  include(__DIR__ . '/../layouts/header.php');
+  ?>
+  <style>
+    .modal-backdrop {
+      opacity: 0.5 !important;
+      background-color: #000 !important;
+    }
 
-  <!-- Favicon -->
-  <link href="../vendor/img/favicon.ico" rel="icon">
+    /* Desain harga */
+    .price-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: bold;
+      color: #333;
+    }
 
-  <!-- Google Web Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+    .original-price {
+      text-decoration: line-through;
+      margin-right: 20px;
+      font-size: 1.5rem;
+      color: #999;
+    }
 
-  <!-- Icon Font Stylesheet -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    .discount-price {
+      color: #e74c3c;
+      /* Warna merah */
+    }
 
-  <!-- Libraries Stylesheet -->
-  <link href="../vendor/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-  <link href="../vendor/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+    .btn-close {
+      transition: transform 0.3s ease;
+      /* Animasi transformasi */
+    }
 
-  <!-- Customized Bootstrap Stylesheet -->
-  <link href="../vendor/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Template Stylesheet -->
-  <link href="../vendor/css/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="../vendor/css/styled.css">
+    .btn-close:hover {
+      transform: translateX(-5px);
+      /* Bergerak ke kiri saat hover */
+    }
+  </style>
 </head>
 
-<body>
+<body id="page-top">
+  <div id="wrapper">
+    <?php
+    include(__DIR__ . '/../layouts/sidebar.php');
+    ?>
+    <div id="content-wrapper" class="d-flex flex-column">
+      <div id="content">
+        <!-- TopBar -->
+        <?php
+        include(__DIR__ . '/../layouts/navbar.php');
+        ?>
+        <!-- Topbar -->
 
-  <!-- Navbar Start -->
-  <nav class="navbar navbar-expand bg-secondary navbar-dark sticky-top px-4 py-0">
-    <?php if (isset($respon)) { ?>
-      <a href="/" class="btn btn-primary m-2"><i class="fa fa-backspace me-2"></i>Kembali</a>
-    <?php } ?>
-    <div class="navbar-nav align-items-center ms-auto">
+        <!-- Container Fluid-->
+        <div class="container-fluid" id="container-wrapper">
+          <form action="/question/hasil" method="GET">
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+              <h1 class="h3 mb-0 text-gray-800">Kuisioner</h1>
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Kuisioner</li>
+              </ol>
+            </div>
+            <div class="row mb-3">
+              <?php if (isset($success_insert) && !empty($success_insert)) { ?>
+                <div class="alert alert-success alert-dismissible" role="alert">
+                  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <h6><i class="fas fa-check"></i><b> Berhasil!</b></h6>
+                  Rating anda telah dikirim
+                </div>
+              <?php } ?>
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th>Kategori Penilaian</th>
+                      <th>Pilihan 1</th>
+                      <th>Pilihan 2</th>
+                      <th>Pilihan 3</th>
+                    </tr>
+                  </thead>
+                  <tbody>
 
-      <div class="nav-item dropdown">
-        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-          <img class="rounded-circle me-lg-2" src="../vendor/img/user_kosong.jpg" alt="" style="width: 40px; height: 40px;">
-          <span class="d-none d-lg-inline-flex"><?php echo session()->get("username") ?></span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-end bg-secondary border-0 rounded-0 rounded-bottom m-0">
-          <a href="/users/logout" class="dropdown-item text-white">Log Out</a>
+                    <?php
+                    foreach ($groupData as $quest) { ?>
+                      <tr>
+                        <td><?= $quest['name'] ?></td>
+                        <?php
+                        foreach ($quest['options'] as  $index => $opsi) { ?>
+                          <td>
+                            <div class="custom-control custom-radio">
+                              <input type="radio" id="pilihan<?= $quest['id'] . $index ?>" value="<?= $index ?>" name="pilihan<?= $quest['id'] ?>" class="custom-control-input">
+                              <label class="custom-control-label" for="pilihan<?= $quest['id'] . $index ?>"><?= $opsi ?></label>
+                            </div>
+                          </td>
+                        <?php }
+                        ?>
+                      </tr>
+                    <?php }
+                    ?>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Iklan
+            <div class="modal" id="adModal" tabindex="-1">
+              <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content" style="background-color: #fff; border-radius: 30px; box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);">
+                  <div class="modal-body text-center py-5">
+                    <h2 class="mb-4">🎉 Selamat Datang! 🎉</h2>
+                    <p class="fs-5 mb-4">Jangan lewatkan kesempatan istimewa ini!</p>
+                     Desain harga -->
+              <!-- <div class="price-container mb-3">
+                      <span class="original-price">Rp 1.900.000</span>
+                      <span class="discount-price">Rp 1.300.000</span>
+                    </div> -->
+              <!-- <p class="text-muted mb-4">Harga awal</p>
+                    <p class="fs-4 mb-4">Harga Spesial Hari Ini!</p>
+                    <p class="text-muted mb-4">Anda harus membayar terlebih dahulu sebelum mengakses fitur-fitur kami.</p> -->
+              <!-- Tombol untuk menutup modal -->
+              <!-- <button type="button" id="tombol_nakal" class="btn btn-danger btn-lg btn-close" data-bs-dismiss="modal">Tutup</button>
+                    <button type="button" class="btn btn-primary btn-lg">Bayar Sekarang!</button>
+                  </div>
+                </div>
+              </div>
+            </div> -->
+              <!-- Iklan -->
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Hitung</button>
+          </form>
+          <!---Container Fluid-->
         </div>
       </div>
     </div>
-  </nav>
-  <!-- Navbar End -->
-
-  <?php if (isset($respon)) { ?>
+  </div>
 
 
-    <!-- Blank Start -->
-    <div class="container-fluid pt-4 px-4">
-      <div class="row vh-100 bg-secondary rounded align-items-center justify-content-center mx-0">
-        <div class="col-md-4">
-          <table class="table table-bordered text-center border-white">
-            <thead>
-              <tr>
-                <th colspan="2">
-                  <h4>Hasil</h4>
-                </th>
-              </tr>
-              <tr>
-                <th>
-                  <h5>Status</h5>
-                </th>
-                <th>
-                  <h5>Skor</h5>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="text-white">
-              <tr>
-                <td class="p-4">
-                  <?php
-                  if (isset($status)) {
-                    echo $status;
-                  }
-                  ?>
-                </td>
-                <td class="p-lg-4">
-                  <?php
-                  if (isset($score)) {
-                    echo $score;
-                  }
-                  ?></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <script src="../assets/vendor/jquery/jquery.min.js"></script>
+  <script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="../assets/js/ruang-admin.min.js"></script>
+  <script src="../assets/vendor/chart.js/Chart.min.js"></script>
+  <script src="../assets/js/demo/chart-area-demo.js"></script>
+  <script>
+    document.getElementById('openAd').addEventListener('click', function() {
+      $('#adModal').modal('show');
+    });
 
+    // LISTENER EVENT TOMBOL BERGERAK
+    function makeNaughtyButtonMove(event) {
+      const button = document.getElementById('tombol_nakal');
+      const modal = document.querySelector('.modal-content');
+      const modalRect = modal.getBoundingClientRect();
+      const buttonRect = button.getBoundingClientRect();
+      let newX = event.clientX - buttonRect.width / 2;
+      let newY = event.clientY - buttonRect.height / 2;
 
-        <div class="col-md-8 table-responsive">
-          <table class="table table-bordered border-white">
-            <thead class="text-center">
-              <tr>
-                <th>
-                  <h5>Result</h5>
-                </th>
-              </tr>
-            </thead>
-            <tbody class="text-white">
-              <tr>
-                <td>
-                  <p class="text-right p-3">
-                    <?php
-                    if (isset($tingkat)) {
-                      echo "<h4>Tingkat Dehidrasi " . $stat . "</h4>";
+      // Membalik arah jika tombol mencapai batas modal
+      if (newX < modalRect.left || newX + buttonRect.width > modalRect.right) {
+        newX = Math.min(Math.max(newX, modalRect.left), modalRect.right - buttonRect.width);
+      }
+      if (newY < modalRect.top || newY + buttonRect.height > modalRect.bottom) {
+        newY = Math.min(Math.max(newY, modalRect.top), modalRect.bottom - buttonRect.height);
+      }
 
-                      echo $tingkat;
-                    }
-                    ?>
-                  </p>
-                  <p class="text-right p-3">
-                    <?php
-                    if (isset($dampak)) {
-                      echo "<h4>Dampak Dehidrasi " . $stat . "</h4>";
-                      echo $dampak;
-                    }
-                    ?>
-                  </p>
-                  <p class="text-right p-3">
-                    <?php
-                    if (isset($pelaksanaan)) {
-                      echo "<h4>Pelaksanaan Dehidrasi " . $stat . "</h4>";
-                      echo $pelaksanaan;
-                    }
-                    ?>
-                  </p>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </div>
-    </div>
-    <!-- Blank End -->
-  <?php } else { ?>
+      button.style.transform = `translate(${newX}px, ${newY}px)`;
+    }
 
-
-    <div class="container-fluid position-relative d-flex p-0">
-      <!-- Blank Start -->
-      <div class="container-fluid pt-4 px-4">
-        <div class="bg-secondary rounded h-100 p-4">
-          <?php echo form_open("/") ?>
-          <table class="table table-hover table-bordered text-left ">
-            <thead class="color-font color-head">
-              <tr>
-                <th scope="col" colspan="4" class="p-4 text-center text-white h4">Quizioner Tingkat Dehidrasi</th>
-              </tr>
-            </thead>
-            <tbody class="color-font text-white">
-              <tr>
-                <th scope="col" class="text-center h6"> Yang Dinilai</th>
-                <td class="text-center text-white">1</td>
-                <td class="text-center text-white">2</td>
-                <td class="text-center text-white">3</td>
-              </tr>
-              <tr>
-                <td class="text-white">Kesadaran Umum</td>
-                <td>
-                  <div class="form-check form-check-inline ">
-                    <input class="form-check-input" type="radio" name="kesadaran_umum" id="kesadaran_umum_1" value="1" required>
-                    <label class="form-check-label" for="kesadaran_umum_1">Baik</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kesadaran_umum" id="kesadaran_umum_2" value="2" required>
-                    <label class="form-check-label" for="kesadaran_umum_2">Normal, Lelah, Gelisah</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kesadaran_umum" id="kesadaran_umum_3" value="3" required>
-                    <label class="form-check-label" for="kesadaran_umum_3">Gelisah, Lemas, Mengantuk, Penurunan Kesadaran</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Mata</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="mata" id="mata_1" value="1" required>
-                    <label class="form-check-label" for="mata_1">Normal</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="mata" id="mata_2" value="2" required>
-                    <label class="form-check-label" for="mata_2">Sedikit Cekung</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="mata" id="mata_3" value="3" required>
-                    <label class="form-check-label" for="mata_3">Sangat Cekung</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Air Mata</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="air_mata" id="air_mata_1" value="1" required>
-                    <label class="form-check-label" for="air_mata_1">Ada</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="air_mata" id="arti_mata_2" value="2" required>
-                    <label class="form-check-label" for="arti_mata_2">Berkurang</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="air_mata" id="arti_mata_3" value="3" required>
-                    <label class="form-check-label" for="arti_mata_3">Tidak Ada</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Mulut Dan Lidah</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="mulut_dan_lidah" id="mulut_dan_lidah_1" value="1" required>
-                    <label class="form-check-label" for="mulut_dan_lidah_1">Bersih</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="mulut_dan_lidah" id="mulut_dan_lidah_2" value="2" required>
-                    <label class="form-check-label" for="mulut_dan_lidah_2">Kering</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="mulut_dan_lidah" id="mulut_dan_lidah_3" value="3" required>
-                    <label class="form-check-label" for="mulut_dan_lidah_3">Sangat Kering</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Rasa Haus</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="rasa_haus" id="rasa_haus_1" value="1" required>
-                    <label class="form-check-label" for="rasa_haus_1">Minum Biasa, Tidak Haus</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="rasa_haus" id="rasa_haus_2" value="2" required>
-                    <label class="form-check-label" for="rasa_haus_2">Haus, Ingin Minum Banyak</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="rasa_haus" id="rasa_haus_3" value="3" required>
-                    <label class="form-check-label" for="rasa_haus_3">Malas Minum Atau Tidak Bisa Minum</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Cubitan Kulit</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="cubitan_kulit" id="cubitan_kulit_1" value="1" required>
-                    <label class="form-check-label" for="cubitan_kulit_1">Segera Kembali</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="cubitan_kulit" id="cubitan_kulit_2" value="2" required>
-                    <label class="form-check-label" for="cubitan_kulit_2">Kembali < 2 Detik</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="cubitan_kulit" id="cubitan_kulit_3" value="3" required>
-                    <label class="form-check-label" for="cubitan_kulit_3">Kembali > 2 Detik</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Ekstremitas (Telapak Tangan Dan Kaki)</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ekstremitas" id="ekstremitas_1" value="1" required>
-                    <label class="form-check-label" for="ekstremitas_1">Hangat</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ekstremitas" id="ekstremitas_2" value="2" required>
-                    <label class="form-check-label" for="ekstremitas_2">Agak Dingin</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="ekstremitas" id="ekstremitas_3" value="3" required>
-                    <label class="form-check-label" for="ekstremitas_3">Dingin, Kebiruan</label>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Kencing</td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kencing" id="kencing_1" value="1" required>
-                    <label class="form-check-label" for="kencing_1">Normal</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kencing" id="kencing_2" value="2" required>
-                    <label class="form-check-label" for="kencing_2">Berkurang</label>
-                  </div>
-                </td>
-                <td>
-                  <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="kencing" id="kencing_3" value="3" required>
-                    <label class="form-check-label" for="kencing_3">Minimal (Sedikit)</label>
-                  </div>
-                </td>
-              </tr>
-
-            </tbody>
-          </table>
-          <button class="btn btn-success w-100 m-2 p-3" type="submit">Hitung</button>
-          <?php echo form_close() ?>
-
-
-
-
-        </div>
-      <?php }  ?>
-      </div>
-
-      <!-- Blank End -->
-
-      <!-- Footer End -->
-    </div>
-    <!-- Content End -->
-
-
-    </div>
-
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../vendor/lib/chart/chart.min.js"></script>
-    <script src="../vendor/lib/easing/easing.min.js"></script>
-    <script src="../vendor/lib/waypoints/waypoints.min.js"></script>
-    <script src="../vendor/lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="../vendor/lib/tempusdominus/js/moment.min.js"></script>
-    <script src="../vendor/lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="../vendor/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="../vendor/js/main.js"></script>
+    // Event saat cursor bergerak
+    document.querySelector('.modal-content').addEventListener('mousemove', makeNaughtyButtonMove);
+  </script>
 </body>
 
 </html>
